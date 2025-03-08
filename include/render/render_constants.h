@@ -1,0 +1,10 @@
+#ifndef RENDER_CONSTANTS_H
+#define RENDER_CONSTANTS_H
+
+enum {
+  SCR_WIDTH = 224,
+  SCR_HEIGHT = 256,
+  SCR_SCALE = 8,
+};
+
+#endif // RENDER_CONSTANTS_H

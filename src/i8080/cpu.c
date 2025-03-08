@@ -1,6 +1,8 @@
 #include "i8080/cpu.h"
 
-CPU CPU_init(void) {
+void CPU_init(CPU *cpu) {
   // TODO: look up starting values for SP, PC, ...
-  return (CPU){.flags = FLAG_ALWAYS};
+  *cpu = (CPU){
+      .flags = bit_set(0, FLAG_ALWAYS),
+  };
 }

@@ -1,6 +1,9 @@
 #ifndef CPU_H
 #define CPU_H
 
+#include "bitops.h"
+#include "bus/dataIO.h"
+#include <stddef.h>
 #include <stdint.h>
 
 // Bits set in corresponding flag position
@@ -17,13 +20,19 @@ typedef struct {
   // Registers
   uint8_t regA; // Accumulator
   uint8_t regB, regC, regD, regE, regH, regL;
-  uint8_t flags;
+  bit8 flags;
 
   // pointers
   uint16_t SP;
   uint16_t PC;
+
+  size_t cycles;
+
+  uint8_t ram[0x4000];
+  // BusInterface out;
+  // BusInterface in;
 } CPU;
 
-CPU CPU_init(void);
+void CPU_init(CPU *cpu);
 
 #endif // CPU_H
