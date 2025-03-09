@@ -3,31 +3,47 @@
 
 #include "types/instruction.h"
 
-// TODO: Add rest
-//
-//
+// Store Accumulator at <ADDR>
+// Takes up 3 Bytes and 13 CPU cycles
+// Affects no flags
+instruction STA_ADDR;
+
+// Store Accumulator at address <B> + <C> or <D> + <E>
+// Takes up 1 Byte and 7 CPU cycles
+// Affects no flags
+instruction STAX_B;
+instruction STAX_D;
+
+// Load Accumulator with content at <ADDR>
+// Takes up 3 Bytes and 13 CPU cycles
+// Affects no flags
+instruction LDA_ADDR;
+
+// Load Accumulator with content at address <B> + <C> or <D> + <E>
+// Takes up 1 Byte and 7 CPU cycles
+// Affects no flags
+instruction LDAX_B;
+instruction LDAX_D;
 
 // Moves <BYTE> to address <L> + <H>
 // Takes up 2 Bytes and 10 CPU cycles
 // Affects no flags
-instruction MOVI_M_BYTE;
+instruction MVI_M_BYTE;
 
-// The following MOV instructions all have the same profile:
-//   Move <BYTE> to specified register
-//   Takes up 2 Bytes and 7 CPU cycles
-//   Affects no flags
-instruction MOVI_A_BYTE;
-instruction MOVI_B_BYTE;
-instruction MOVI_C_BYTE;
-instruction MOVI_D_BYTE;
-instruction MOVI_E_BYTE;
-instruction MOVI_H_BYTE;
-instruction MOVI_L_BYTE;
+// Move <BYTE> to specified register
+// Takes up 2 Bytes and 7 CPU cycles
+// Affects no flags
+instruction MVI_A_BYTE;
+instruction MVI_B_BYTE;
+instruction MVI_C_BYTE;
+instruction MVI_D_BYTE;
+instruction MVI_E_BYTE;
+instruction MVI_H_BYTE;
+instruction MVI_L_BYTE;
 
-// The following MOV instructions all have the same profile:
-//   Move content from right register to the left
-//   Takes up 1 Byte and 5 CPU cycles
-//   Affects no flags
+// Move content from right register to the left
+// Takes up 1 Byte and 5 CPU cycles
+// Affects no flags
 instruction MOV_A_A;
 instruction MOV_A_B;
 instruction MOV_A_C;
@@ -84,12 +100,11 @@ instruction MOV_L_E;
 instruction MOV_L_H;
 instruction MOV_L_L;
 
-// The following MOV instructions all have the same profile:
-//   Move content from right register to the left
-//   M is formed by taking the the L register as the low byte and
-//   the H register as the high byte of a memory address
-//   Takes up 1 Byte and 7 CPU cycles
-//   Affects no flags
+// Move content from right register to the left
+// M is formed by taking the the L register as the low byte and
+// the H register as the high byte of a memory address
+// Takes up 1 Byte and 7 CPU cycles
+// Affects no flags
 instruction MOV_A_M;
 instruction MOV_B_M;
 instruction MOV_C_M;

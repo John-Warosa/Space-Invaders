@@ -1,59 +1,108 @@
 #include "i8080/instructions/load_store_move_8.h"
+#include "i8080/cpu.h"
 #include <stdint.h>
 
 #define CCAT_8_BIT(high, low) (((uint16_t)(high) << 8) + (uint16_t)(low))
 
-void MOVI_M_BYTE(CPU *cpu) {
-  uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
-  cpu->ram[addr] = cpu->ram[cpu->PC];
+void STA_ADDR(CPU *cpu) {
+  uint8_t lowByte = cpu->ram[cpu->PC];
+  uint8_t highByte = cpu->ram[cpu->PC + 1];
+  uint16_t addr = CCAT_8_BIT(highByte, lowByte);
 
+  cpu->ram[addr] = cpu->regA;
+  cpu->PC += 2;
+  cpu->cycles += 13;
+}
+
+void STAX_B(CPU *cpu) {
+  uint16_t addr = CCAT_8_BIT(cpu->regB, cpu->regC);
+
+  cpu->ram[addr] = cpu->regA;
+  cpu->cycles += 7;
+}
+
+void STAX_D(CPU *cpu) {
+  uint16_t addr = CCAT_8_BIT(cpu->regD, cpu->regE);
+
+  cpu->ram[addr] = cpu->regA;
+  cpu->cycles += 7;
+}
+
+void LDA_ADDR(CPU *cpu) {
+  uint8_t lowByte = cpu->ram[cpu->PC];
+  uint8_t highByte = cpu->ram[cpu->PC + 1];
+  uint16_t addr = CCAT_8_BIT(highByte, lowByte);
+
+  cpu->regA = cpu->ram[addr];
+  cpu->PC += 2;
+  cpu->cycles += 13;
+}
+
+void LDAX_B(CPU *cpu) {
+  uint16_t addr = CCAT_8_BIT(cpu->regB, cpu->regC);
+
+  cpu->regA = cpu->ram[addr];
+  cpu->cycles += 7;
+}
+
+void LDA_D(CPU *cpu) {
+  uint16_t addr = CCAT_8_BIT(cpu->regD, cpu->regE);
+
+  cpu->regA = cpu->ram[addr];
+  cpu->cycles += 7;
+}
+
+void MVI_M_BYTE(CPU *cpu) {
+  uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
+
+  cpu->ram[addr] = cpu->ram[cpu->PC];
   cpu->PC++;
   cpu->cycles += 10;
 }
 
-void MOVI_A_BYTE(CPU *cpu) {
+void MVI_A_BYTE(CPU *cpu) {
   cpu->regA = cpu->ram[cpu->PC];
 
   cpu->PC++;
   cpu->cycles += 7;
 }
 
-void MOVI_B_BYTE(CPU *cpu) {
+void MVI_B_BYTE(CPU *cpu) {
   cpu->regB = cpu->ram[cpu->PC];
 
   cpu->PC++;
   cpu->cycles += 7;
 }
 
-void MOVI_C_BYTE(CPU *cpu) {
+void MVI_C_BYTE(CPU *cpu) {
   cpu->regC = cpu->ram[cpu->PC];
 
   cpu->PC++;
   cpu->cycles += 7;
 }
 
-void MOVI_D_BYTE(CPU *cpu) {
+void MVI_D_BYTE(CPU *cpu) {
   cpu->regD = cpu->ram[cpu->PC];
 
   cpu->PC++;
   cpu->cycles += 7;
 }
 
-void MOVI_E_BYTE(CPU *cpu) {
+void MVI_E_BYTE(CPU *cpu) {
   cpu->regE = cpu->ram[cpu->PC];
 
   cpu->PC++;
   cpu->cycles += 7;
 }
 
-void MOVI_H_BYTE(CPU *cpu) {
+void MVI_H_BYTE(CPU *cpu) {
   cpu->regH = cpu->ram[cpu->PC];
 
   cpu->PC++;
   cpu->cycles += 7;
 }
 
-void MOVI_L_BYTE(CPU *cpu) {
+void MVI_L_BYTE(CPU *cpu) {
   cpu->regL = cpu->ram[cpu->PC];
 
   cpu->PC++;
