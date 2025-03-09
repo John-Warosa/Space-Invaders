@@ -3,6 +3,63 @@
 
 #define CCAT_8_BIT(high, low) (((uint16_t)(high) << 8) + (uint16_t)(low))
 
+void MOVI_M_BYTE(CPU *cpu) {
+  uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
+  cpu->ram[addr] = cpu->ram[cpu->PC];
+
+  cpu->PC++;
+  cpu->cycles += 10;
+}
+
+void MOVI_A_BYTE(CPU *cpu) {
+  cpu->regA = cpu->ram[cpu->PC];
+
+  cpu->PC++;
+  cpu->cycles += 7;
+}
+
+void MOVI_B_BYTE(CPU *cpu) {
+  cpu->regB = cpu->ram[cpu->PC];
+
+  cpu->PC++;
+  cpu->cycles += 7;
+}
+
+void MOVI_C_BYTE(CPU *cpu) {
+  cpu->regC = cpu->ram[cpu->PC];
+
+  cpu->PC++;
+  cpu->cycles += 7;
+}
+
+void MOVI_D_BYTE(CPU *cpu) {
+  cpu->regD = cpu->ram[cpu->PC];
+
+  cpu->PC++;
+  cpu->cycles += 7;
+}
+
+void MOVI_E_BYTE(CPU *cpu) {
+  cpu->regE = cpu->ram[cpu->PC];
+
+  cpu->PC++;
+  cpu->cycles += 7;
+}
+
+void MOVI_H_BYTE(CPU *cpu) {
+  cpu->regH = cpu->ram[cpu->PC];
+
+  cpu->PC++;
+  cpu->cycles += 7;
+}
+
+void MOVI_L_BYTE(CPU *cpu) {
+  cpu->regL = cpu->ram[cpu->PC];
+
+  cpu->PC++;
+  cpu->cycles += 7;
+}
+
 void MOV_A_A(CPU *cpu) {
   cpu->regA = cpu->regA;
   cpu->cycles += 5;
@@ -251,69 +308,83 @@ void MOV_L_L(CPU *cpu) {
 void MOV_A_M(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
   cpu->regA = cpu->ram[addr];
+  cpu->cycles += 7;
 }
 
 void MOV_B_M(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
   cpu->regB = cpu->ram[addr];
+  cpu->cycles += 7;
 }
 
 void MOV_C_M(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
   cpu->regC = cpu->ram[addr];
+  cpu->cycles += 7;
 }
 
 void MOV_D_M(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
   cpu->regD = cpu->ram[addr];
+  cpu->cycles += 7;
 }
 
 void MOV_E_M(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
   cpu->regE = cpu->ram[addr];
+  cpu->cycles += 7;
 }
 
 void MOV_H_M(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
   cpu->regH = cpu->ram[addr];
+  cpu->cycles += 7;
 }
 
 void MOV_L_M(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
   cpu->regL = cpu->ram[addr];
+  cpu->cycles += 7;
 }
 
 void MOV_M_A(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
   cpu->ram[addr] = cpu->regA;
+  cpu->cycles += 7;
 }
 
 void MOV_M_B(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
   cpu->ram[addr] = cpu->regB;
+  cpu->cycles += 7;
 }
 
 void MOV_M_C(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
   cpu->ram[addr] = cpu->regC;
+  cpu->cycles += 7;
 }
 
 void MOV_M_D(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
   cpu->ram[addr] = cpu->regD;
+  cpu->cycles += 7;
 }
 
 void MOV_M_E(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
   cpu->ram[addr] = cpu->regE;
+  cpu->cycles += 7;
 }
 
 void MOV_M_H(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
   cpu->ram[addr] = cpu->regH;
+  cpu->cycles += 7;
 }
 
 void MOV_M_L(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
   cpu->ram[addr] = cpu->regL;
+  cpu->cycles += 7;
 }
