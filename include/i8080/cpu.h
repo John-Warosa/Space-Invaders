@@ -2,7 +2,7 @@
 #define CPU_H
 
 #include "bitops.h"
-#include "bus/dataIO.h"
+// #include "bus/dataIO.h"
 #include <stddef.h>
 #include <stdint.h>
 
@@ -34,5 +34,7 @@ typedef struct {
 } CPU;
 
 void CPU_init(CPU *cpu);
+
+void CPU_loop(CPU *cpu);
 
 #endif // CPU_H

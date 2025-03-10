@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+void render_init(void);
+
 void render_screen(uint8_t pixels[]);
 
 #endif // RENDER_H

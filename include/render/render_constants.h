@@ -2,9 +2,9 @@
 #define RENDER_CONSTANTS_H
 
 enum {
-  SCR_WIDTH = 224,
-  SCR_HEIGHT = 256,
-  SCR_SCALE = 8,
+  SCR_WIDTH = 256,
+  SCR_HEIGHT = 224,
+  SCR_SCALE = 5,
 };
 
 #endif // RENDER_CONSTANTS_H
