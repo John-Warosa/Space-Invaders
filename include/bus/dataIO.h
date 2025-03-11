@@ -4,24 +4,12 @@
 #include <stdint.h>
 
 typedef enum {
-  READ,
-  WRITE,
-  WAIT,
-} BusAction;
+  MEMORY,
+  OUTPUT,
+  INPUT,
+} Device;
 
-typedef enum {
-  DEVICE_CPU,
-  DEVICE_RAM,
-} TargetDevice;
-
-typedef struct {
-  BusAction action;
-  TargetDevice device;
-  uint16_t data;
-} BusInterface;
-
-static inline BusInterface no_bus(void) {
-  return (BusInterface){.action = WAIT};
-}
+void bus_write(Device device, uint16_t addr, uint8_t data);
+uint8_t bus_read(Device device, uint16_t addr);
 
 #endif // DATAIO_H

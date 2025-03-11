@@ -27,10 +27,7 @@ typedef struct {
   uint16_t PC;
 
   size_t cycles;
-
-  uint8_t ram[0x4000];
-  // BusInterface out;
-  // BusInterface in;
+  uint8_t opcode;
 } CPU;
 
 void CPU_init(CPU *cpu);

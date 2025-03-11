@@ -1,15 +1,16 @@
 #include "i8080/instructions/load_store_move_8.h"
+#include "bus/dataIO.h"
 #include "i8080/cpu.h"
 #include <stdint.h>
 
 #define CCAT_8_BIT(high, low) (((uint16_t)(high) << 8) + (uint16_t)(low))
 
 void STA_ADDR(CPU *cpu) {
-  uint8_t lowByte = cpu->ram[cpu->PC];
-  uint8_t highByte = cpu->ram[cpu->PC + 1];
+  uint8_t lowByte = bus_read(MEMORY, cpu->PC);
+  uint8_t highByte = bus_read(MEMORY, cpu->PC + 1);
   uint16_t addr = CCAT_8_BIT(highByte, lowByte);
 
-  cpu->ram[addr] = cpu->regA;
+  bus_write(MEMORY, addr, cpu->regA);
   cpu->PC += 2;
   cpu->cycles += 13;
 }
@@ -17,23 +18,23 @@ void STA_ADDR(CPU *cpu) {
 void STAX_B(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regB, cpu->regC);
 
-  cpu->ram[addr] = cpu->regA;
+  bus_write(MEMORY, addr, cpu->regA);
   cpu->cycles += 7;
 }
 
 void STAX_D(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regD, cpu->regE);
 
-  cpu->ram[addr] = cpu->regA;
+  bus_write(MEMORY, addr, cpu->regA);
   cpu->cycles += 7;
 }
 
 void LDA_ADDR(CPU *cpu) {
-  uint8_t lowByte = cpu->ram[cpu->PC];
-  uint8_t highByte = cpu->ram[cpu->PC + 1];
+  uint8_t lowByte = bus_read(MEMORY, cpu->PC);
+  uint8_t highByte = bus_read(MEMORY, cpu->PC + 1);
   uint16_t addr = CCAT_8_BIT(highByte, lowByte);
 
-  cpu->regA = cpu->ram[addr];
+  cpu->regA = bus_read(MEMORY, addr);
   cpu->PC += 2;
   cpu->cycles += 13;
 }
@@ -41,69 +42,69 @@ void LDA_ADDR(CPU *cpu) {
 void LDAX_B(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regB, cpu->regC);
 
-  cpu->regA = cpu->ram[addr];
+  cpu->regA = bus_read(MEMORY, addr);
   cpu->cycles += 7;
 }
 
 void LDA_D(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regD, cpu->regE);
 
-  cpu->regA = cpu->ram[addr];
+  cpu->regA = bus_read(MEMORY, addr);
   cpu->cycles += 7;
 }
 
 void MVI_M_BYTE(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
 
-  cpu->ram[addr] = cpu->ram[cpu->PC];
+  bus_write(MEMORY, addr, cpu->PC);
   cpu->PC++;
   cpu->cycles += 10;
 }
 
 void MVI_A_BYTE(CPU *cpu) {
-  cpu->regA = cpu->ram[cpu->PC];
+  cpu->regA = bus_read(MEMORY, cpu->PC);
 
   cpu->PC++;
   cpu->cycles += 7;
 }
 
 void MVI_B_BYTE(CPU *cpu) {
-  cpu->regB = cpu->ram[cpu->PC];
+  cpu->regB = bus_read(MEMORY, cpu->PC);
 
   cpu->PC++;
   cpu->cycles += 7;
 }
 
 void MVI_C_BYTE(CPU *cpu) {
-  cpu->regC = cpu->ram[cpu->PC];
+  cpu->regC = bus_read(MEMORY, cpu->PC);
 
   cpu->PC++;
   cpu->cycles += 7;
 }
 
 void MVI_D_BYTE(CPU *cpu) {
-  cpu->regD = cpu->ram[cpu->PC];
+  cpu->regD = bus_read(MEMORY, cpu->PC);
 
   cpu->PC++;
   cpu->cycles += 7;
 }
 
 void MVI_E_BYTE(CPU *cpu) {
-  cpu->regE = cpu->ram[cpu->PC];
+  cpu->regE = bus_read(MEMORY, cpu->PC);
 
   cpu->PC++;
   cpu->cycles += 7;
 }
 
 void MVI_H_BYTE(CPU *cpu) {
-  cpu->regH = cpu->ram[cpu->PC];
+  cpu->regH = bus_read(MEMORY, cpu->PC);
 
   cpu->PC++;
   cpu->cycles += 7;
 }
 
 void MVI_L_BYTE(CPU *cpu) {
-  cpu->regL = cpu->ram[cpu->PC];
+  cpu->regL = bus_read(MEMORY, cpu->PC);
 
   cpu->PC++;
   cpu->cycles += 7;
@@ -356,84 +357,84 @@ void MOV_L_L(CPU *cpu) {
 
 void MOV_A_M(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
-  cpu->regA = cpu->ram[addr];
+  cpu->regA = bus_read(MEMORY, addr);
   cpu->cycles += 7;
 }
 
 void MOV_B_M(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
-  cpu->regB = cpu->ram[addr];
+  cpu->regB = bus_read(MEMORY, addr);
   cpu->cycles += 7;
 }
 
 void MOV_C_M(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
-  cpu->regC = cpu->ram[addr];
+  cpu->regC = bus_read(MEMORY, addr);
   cpu->cycles += 7;
 }
 
 void MOV_D_M(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
-  cpu->regD = cpu->ram[addr];
+  cpu->regD = bus_read(MEMORY, addr);
   cpu->cycles += 7;
 }
 
 void MOV_E_M(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
-  cpu->regE = cpu->ram[addr];
+  cpu->regE = bus_read(MEMORY, addr);
   cpu->cycles += 7;
 }
 
 void MOV_H_M(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
-  cpu->regH = cpu->ram[addr];
+  cpu->regH = bus_read(MEMORY, addr);
   cpu->cycles += 7;
 }
 
 void MOV_L_M(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
-  cpu->regL = cpu->ram[addr];
+  cpu->regL = bus_read(MEMORY, addr);
   cpu->cycles += 7;
 }
 
 void MOV_M_A(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
-  cpu->ram[addr] = cpu->regA;
+  bus_write(MEMORY, addr, cpu->regA);
   cpu->cycles += 7;
 }
 
 void MOV_M_B(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
-  cpu->ram[addr] = cpu->regB;
+  bus_write(MEMORY, addr, cpu->regB);
   cpu->cycles += 7;
 }
 
 void MOV_M_C(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
-  cpu->ram[addr] = cpu->regC;
+  bus_write(MEMORY, addr, cpu->regC);
   cpu->cycles += 7;
 }
 
 void MOV_M_D(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
-  cpu->ram[addr] = cpu->regD;
+  bus_write(MEMORY, addr, cpu->regD);
   cpu->cycles += 7;
 }
 
 void MOV_M_E(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
-  cpu->ram[addr] = cpu->regE;
+  bus_write(MEMORY, addr, cpu->regE);
   cpu->cycles += 7;
 }
 
 void MOV_M_H(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
-  cpu->ram[addr] = cpu->regH;
+  bus_write(MEMORY, addr, cpu->regH);
   cpu->cycles += 7;
 }
 
 void MOV_M_L(CPU *cpu) {
   uint16_t addr = CCAT_8_BIT(cpu->regH, cpu->regL);
-  cpu->ram[addr] = cpu->regL;
+  bus_write(MEMORY, addr, cpu->regL);
   cpu->cycles += 7;
 }
